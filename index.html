@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>DukaanOS — दुकान का खाता</title>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4f9;--card:#fff;--ink:#16213e;--mut:#5d6883;--line:#d9dfeb;--ac:#1f3a8a;--onac:#fff;--red:#c8102e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1322;--card:#171e35;--ink:#eaeefb;--mut:#a0abc8;--line:#2a3354;--ac:#8ea8ff;--onac:#0e1322;--red:#ff6b81}}
+:root[data-theme="dark"]{--bg:#0e1322;--card:#171e35;--ink:#eaeefb;--mut:#a0abc8;--line:#2a3354;--ac:#8ea8ff;--onac:#0e1322;--red:#ff6b81}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;font:17px/1.45 Mukta,"Noto Sans Devanagari",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;display:flex;justify-content:space-between;align-items:center;padding:10px max(16px,calc((100vw - 560px)/2));background:var(--bg);border-bottom:1px solid var(--line)}
+header small{color:var(--mut);font-weight:600}h1{margin:0;font-size:22px;font-weight:800}.ic{background:none;border:0;font-size:24px;padding:8px;color:inherit}
+main{max-width:560px;margin:0 auto;padding:12px 16px 100px}
+.hero{padding:16px 0 6px}.hero small{color:var(--mut)}.big{font-size:52px;font-weight:800;line-height:1.1;color:var(--ac)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 14px}.two>div{border-left:3px solid var(--red);padding-left:10px}.two small{display:block}.two b{font-size:22px}
+.btns{display:grid;gap:10px;margin:12px 0}.c2{grid-template-columns:1fr 1fr}
+.btn{min-height:50px;width:100%;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 17px Mukta,sans-serif;padding:0 14px;margin-top:8px;cursor:pointer}.btns .btn{margin-top:0}
+.btn.p{background:var(--ac);border-color:var(--ac);color:var(--onac)}.btn.dg{color:var(--red);border-color:var(--red)}
+h2{font-size:17px;font-weight:800;margin:22px 0 4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0 12px 12px;border-bottom:1px solid var(--line);border-left:3px solid var(--ac);cursor:pointer}.row.d{border-left-color:var(--red)}
+.g{min-width:0}.g b{display:block;overflow-wrap:anywhere}small,.mut{color:var(--mut);font-size:14px}.g small{display:block}.rt{text-align:right;flex-shrink:0}.rt strong{display:block;font-size:19px}.red{color:var(--red)}
+.acts{display:flex;gap:6px;margin-top:6px;justify-content:flex-end}
+.sm{display:inline-block;min-height:36px;line-height:33px;padding:0 12px;border-radius:10px;border:1.5px solid var(--ac);color:var(--ac);background:none;font:700 14px Mukta,sans-serif;text-decoration:none;cursor:pointer}
+.q{display:flex;align-items:center;gap:10px}.q button{width:42px;height:42px;border-radius:12px;border:1.5px solid var(--ac);background:none;color:var(--ac);font-size:22px;font-weight:800}.q span{min-width:24px;text-align:center;font-weight:800}
+label{display:block;margin-top:12px;font-weight:600;font-size:15px}
+input,select,textarea{display:block;width:100%;margin-top:5px;min-height:48px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:17px Mukta,sans-serif}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.seg button{min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:none;color:var(--ink);font:700 16px Mukta,sans-serif}.seg .on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.tot{display:flex;justify-content:space-between;align-items:center;margin:14px 0 2px;font-size:19px}.tot b{font-size:26px;color:var(--ac)}
+.empty{padding:16px;border:1.5px dashed var(--line);border-radius:14px;margin:14px 0}
+.bars{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:10px;border-bottom:2px solid var(--ink)}.bars i{flex:1;background:var(--ac);border-radius:5px 5px 0 0}.bl{display:flex;gap:8px}.bl span{flex:1;text-align:center;font-size:13px;color:var(--mut)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;color:var(--mut);font:600 12px Mukta,sans-serif;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;cursor:pointer}nav button span{font-size:21px}nav .on{color:var(--ac)}
+.sh{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;justify-content:center;z-index:9}.sh.on{display:flex}
+.sb{background:var(--card);width:min(560px,100%);max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}.sb h2{margin-top:0}
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;z-index:12;max-width:90%;text-align:center}#toast.on{opacity:1}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.pc{border:1.5px solid var(--line);border-radius:14px;padding:4px 12px 12px;margin:10px 0}.pc.on{border-color:var(--ac)}.t3{grid-template-columns:repeat(3,1fr)}
+#au{display:none;position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 16px 20px}.aw{max-width:420px;margin:24px auto}.aw h1{font-size:32px;margin:6px 0}
+</style></head><body>
+<header><div><small id="an" onclick="tap5()" style="cursor:pointer">DukaanOS</small><h1 id="sn"></h1></div><div><button class="ic" id="lg" onclick="tgl()" aria-label="Language" style="font-size:15px;font-weight:800">EN</button><button class="ic" onclick="openSet()" aria-label="Settings">⚙️</button></div></header>
+<main id="v"></main><nav id="nav"></nav>
+<div id="sh" class="sh" onclick="if(event.target===this)cs()"><div class="sb" id="sb"></div></div><div id="toast"></div><div id="au"></div>
+<script>
+const K='dukaanos_v2';let S={shop:'मेरी दुकान',p:[],c:[],s:[]},tab='home',cart={},pay='cash',cu='';
+
+const sv=()=>svq(),$=i=>document.getElementById(i),R=n=>'₹'+Number(n||0).toLocaleString('en-IN'),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5),dk=d=>(d||new Date()).toLocaleDateString('en-CA'),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const t=$('toast');t.textContent=tr(m);t.className='on';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',2200)}
+function sheet(h){const y=$('sb').scrollTop;$('sb').innerHTML=tr(h);$('sh').classList.add('on');$('sb').scrollTop=y}
+function cs(){$('sh').classList.remove('on')}
+function go(t){tab=t;render();scrollTo(0,0)}
+function crow(c){const m=T(`नमस्ते ${c.n}, ${S.shop} में आपका ${R(c.due)} बाकी है। कृपया जल्दी चुका दें। धन्यवाद।`,`Hello ${c.n}, you have ${R(c.due)} due at ${S.shop}. Please pay soon. Thank you.`);return `<div class="row d"><div class="g"><b>${esc(c.n)}</b><small>${c.ph?esc(c.ph):'नंबर नहीं'}</small></div><div class="rt"><strong class="${c.due>0?'red':''}">${R(c.due)}</strong><div class="acts">${c.due>0?`<button class="sm" onclick="openPay('${c.id}')">पैसे मिले</button>`:''}${c.ph&&c.due>0?`<a class="sm" href="sms:${c.ph}?body=${encodeURIComponent(m)}">SMS</a>`:''}${c.ph?`<a class="sm" href="tel:${c.ph}">फ़ोन</a>`:''}</div></div></div>`}
+function prow(p){return `<div class="row" onclick="openProd('${p.id}')"><div class="g"><b>${esc(p.n)}</b><small>${R(p.pr)} प्रति</small></div><div class="rt"><strong class="${p.st<=5?'red':''}">${p.st}</strong><small>बचा है</small></div></div>`}
+const V={
+home(){const ts=S.s.filter(x=>x.d===dk()),sum=ts.reduce((a,x)=>a+x.total,0),cr=ts.filter(x=>x.cr).reduce((a,x)=>a+x.total,0),due=S.c.reduce((a,x)=>a+x.due,0),low=S.p.filter(x=>x.st<=5),td=S.c.filter(x=>x.due>0).sort((a,b)=>b.due-a.due).slice(0,3);
+return `<section class="hero"><small>आज की बिक्री</small><div class="big">${R(sum)}</div><small>नकद ${R(sum-cr)}, उधार ${R(cr)}, ${ts.length} बिल</small></section>
+<div class="two"><div><small>कुल उधार बाकी</small><b class="red">${R(due)}</b></div><div><small>कम स्टॉक</small><b>${low.length} सामान</b></div></div>
+<div class="btns c2"><button class="btn p" onclick="openSale()">➕ नई बिक्री</button><button class="btn" onclick="go('due')">📒 उधार खाता</button></div>
+${S.p.length?'':`<div class="empty">शुरू करने के लिए अपना सामान, कीमत और स्टॉक जोड़ें।<button class="btn p" onclick="openProd()">सामान जोड़ें</button></div>`}
+${td.length?`<h2>इनसे पैसे लेने हैं</h2>${td.map(crow).join('')}`:''}${low.length?`<h2>जल्दी मँगाना है</h2>${low.slice(0,5).map(prow).join('')}`:''}`},
+sale(){const ts=S.s.filter(x=>x.d===dk()).reverse();return `<div class="btns"><button class="btn p" onclick="openSale()">➕ नई बिक्री</button></div><h2>आज के बिल</h2>${ts.length?ts.map(x=>`<div class="row"><div class="g"><b>${esc(x.items.map(i=>i.n+' × '+i.q).join(', '))}</b><small>${x.t}${x.cn?', '+esc(x.cn):''}</small></div><div class="rt"><strong>${R(x.total)}</strong><small class="${x.cr?'red':''}">${x.cr?'उधार':'नकद'}</small></div></div>`).join(''):'<p class="mut">आज अभी कोई बिक्री नहीं हुई।</p>'}`},
+due(){const c=[...S.c].sort((a,b)=>b.due-a.due);return `<div class="btns"><button class="btn p" onclick="openCust()">➕ नया ग्राहक</button></div><p class="mut">SMS और फ़ोन बटन हर साधारण फ़ोन पर चलते हैं, WhatsApp की ज़रूरत नहीं।</p>${c.length?c.map(crow).join(''):'<p class="mut">अभी कोई ग्राहक नहीं। जिन्हें उधार देते हैं, उनका नाम, नंबर और पुराना बाकी जोड़ें।</p>'}`},
+stock(){return `<div class="btns"><button class="btn p" onclick="openProd()">➕ नया सामान</button></div>${S.p.length?'<p class="mut">सामान पर टैप करके कीमत या स्टॉक बदलें। 5 या कम बचे तो लाल दिखेगा।</p>'+S.p.map(prow).join(''):'<p class="mut">अभी कोई सामान नहीं। अपनी दुकान का सामान, कीमत और स्टॉक जोड़ें।</p>'}`},
+rep(){const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d}),k=days.map(dk),v=k.map(x=>S.s.filter(s=>s.d===x).reduce((a,s)=>a+s.total,0)),mx=Math.max(...v,1),wk=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'],m={};S.s.filter(s=>k.includes(s.d)).forEach(s=>s.items.forEach(i=>m[i.n]=(m[i.n]||0)+i.q));const top=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5);
+return `<section class="hero"><small>पिछले 7 दिन की बिक्री</small><div class="big">${R(v.reduce((a,b)=>a+b,0))}</div></section><div class="bars">${v.map(x=>`<i style="height:${Math.max(x/mx*100,2)}%" title="${R(x)}"></i>`).join('')}</div><div class="bl">${days.map(d=>`<span>${wk[d.getDay()]}</span>`).join('')}</div><h2>सबसे ज़्यादा बिकने वाले</h2>${top.length?top.map(([n,q])=>`<div class="row"><div class="g"><b>${esc(n)}</b></div><div class="rt"><strong>${q}</strong><small>बिके</small></div></div>`).join(''):'<p class="mut">बिक्री होने पर यहाँ दिखेगा।</p>'}`}};
+function render(){$('sn').textContent=tr(S.shop);$('an').textContent=C.app;$('lg').textContent=C.lang==='en'?'हिं':'EN';document.documentElement.lang=C.lang;$('nav').innerHTML=[['home','🏠','होम'],['sale','🧾','बिक्री'],['due','📒','उधार'],['stock','📦','स्टॉक'],['rep','📊','रिपोर्ट']].map(([k,e,l])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')"><span>${e}</span>${l}</button>`).join('');$('v').innerHTML=tr(C.mt&&!isOwner()?`<div class="empty"><b>${T('ऐप में सुधार चल रहा है। थोड़ी देर बाद आएँ।','App is under maintenance. Please come back soon.')}</b></div>`:(tab==='home'&&C.ann?`<div class="empty"><b>${esc(C.ann)}</b></div>`:'')+V[tab]());$('nav').innerHTML=tr($('nav').innerHTML)}
+function openSale(){cart={};pay='cash';cu='';saleSheet()}
+function saleSheet(){if(!S.p.length){sheet(`<h2>सामान नहीं है</h2><p class="mut">पहले स्टॉक में सामान जोड़ें।</p><button class="btn p" onclick="openProd()">सामान जोड़ें</button>`);return}
+const tot=S.p.reduce((a,p)=>a+(cart[p.id]||0)*p.pr,0);
+sheet(`<h2>नई बिक्री</h2>${S.p.map(p=>`<div class="row"><div class="g"><b>${esc(p.n)}</b><small>${R(p.pr)}, बचा ${p.st}</small></div><div class="q"><button onclick="qty('${p.id}',-1)" aria-label="कम">−</button><span>${cart[p.id]||0}</span><button onclick="qty('${p.id}',1)" aria-label="ज़्यादा">+</button></div></div>`).join('')}
+<label>ग्राहक (उधार के लिए चुनें)<select onchange="cu=this.value;if(!cu)pay='cash';saleSheet()"><option value="">सामान्य ग्राहक</option>${S.c.map(c=>`<option value="${c.id}" ${c.id===cu?'selected':''}>${esc(c.n)}</option>`).join('')}</select></label>
+<div class="seg"><button class="${pay==='cash'?'on':''}" onclick="pay='cash';saleSheet()">नकद मिला</button><button class="${pay==='credit'?'on':''}" onclick="if(!cu)return toast('उधार के लिए पहले ग्राहक चुनें');pay='credit';saleSheet()">उधार</button></div>
+<div class="tot">कुल <b>${R(tot)}</b></div><button class="btn p" onclick="saveSale()">बिक्री सेव करें</button>`)}
+function qty(id,d){const p=S.p.find(x=>x.id===id);let n=Math.max(0,(cart[id]||0)+d);if(n>p.st){toast('स्टॉक में सिर्फ़ '+p.st+' बचे हैं');n=p.st}cart[id]=n;saleSheet()}
+function saveSale(){const it=S.p.filter(p=>cart[p.id]>0).map(p=>({id:p.id,n:p.n,q:cart[p.id],pr:p.pr}));if(!it.length)return toast('कम से कम एक सामान चुनें');const total=it.reduce((a,i)=>a+i.q*i.pr,0),c=S.c.find(x=>x.id===cu),cr=pay==='credit'&&!!c;it.forEach(i=>{S.p.find(p=>p.id===i.id).st-=i.q});if(cr)c.due+=total;S.s.push({id:uid(),d:dk(),t:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),items:it,total,cr,cn:c?c.n:''});sv();cs();render();toast('बिक्री सेव हो गई')}
+function openProd(id){const p=S.p.find(x=>x.id===id)||{};sheet(`<h2>${id?'सामान बदलें':'नया सामान'}</h2><label>नाम<input id="pn" value="${esc(p.n||'')}" placeholder="जैसे: चावल 1 किलो"></label><label>कीमत (₹)<input id="pp" type="number" inputmode="decimal" value="${p.pr??''}"></label><label>स्टॉक में कितना है<input id="ps" type="number" inputmode="numeric" value="${p.st??''}"></label><button class="btn p" onclick="saveProd('${id||''}')">सेव करें</button>${id?`<button class="btn dg" onclick="delProd('${id}')">हटाएँ</button>`:''}`)}
+function saveProd(id){const n=$('pn').value.trim(),pr=parseFloat($('pp').value),st=parseInt($('ps').value)||0,p=S.p.find(x=>x.id===id);if(!n||!(pr>=0))return toast('नाम और कीमत भरें');if(p){p.n=n;p.pr=pr;p.st=st}else{if(over('mp',S.p))return;S.p.push({id:uid(),n,pr,st})};sv();cs();render()}
+function delProd(id){if(confirm(tr('इस सामान को हटाएँ?'))){S.p=S.p.filter(x=>x.id!==id);sv();cs();render()}}
+function openCust(){sheet(`<h2>नया ग्राहक</h2><label>नाम<input id="cn"></label><label>फ़ोन नंबर (SMS के लिए)<input id="cp" type="tel" inputmode="tel" placeholder="10 अंक"></label><label>पुराना उधार बाकी (₹), हो तो<input id="cd" type="number" inputmode="decimal"></label><button class="btn p" onclick="saveCust()">सेव करें</button>`)}
+function saveCust(){const n=$('cn').value.trim(),ph=$('cp').value.replace(/[^\d+]/g,''),due=parseFloat($('cd').value)||0;if(!n)return toast('नाम भरें');if(over('mc',S.c))return;S.c.push({id:uid(),n,ph,due});sv();cs();render()}
+function openPay(id){const c=S.c.find(x=>x.id===id);sheet(`<h2>${esc(c.n)} से पैसे मिले</h2><p class="mut">अभी बाकी: ${R(c.due)}</p><label>कितने मिले (₹)<input id="pa" type="number" inputmode="decimal" value="${c.due}"></label><button class="btn p" onclick="savePay('${id}')">सेव करें</button>`)}
+function savePay(id){const a=parseFloat($('pa').value),c=S.c.find(x=>x.id===id);if(!(a>0))return toast('रकम भरें');c.due=Math.max(0,c.due-a);sv();cs();render();toast('जमा हो गया')}
+function openSet(){sheet(`<h2>सेटिंग</h2><label>दुकान का नाम<input id="sn2" value="${esc(S.shop)}"></label><button class="btn p" onclick="S.shop=$('sn2').value.trim()||'मेरी दुकान';sv();cs();render()">सेव करें</button><p class="mut">आपका डेटा सिर्फ़ इसी फ़ोन के ब्राउज़र में रहता है। ब्राउज़र का डेटा साफ़ करने पर मिट जाएगा, इसलिए बैकअप कॉपी करके कहीं रख लें।</p><button class="btn" onclick="FB.signOut(FB.auth)">${T('लॉग आउट','Log out')}</button><button class="btn" onclick="openPlans()">💎 ${T('प्लान','Plans')}</button><button class="btn" onclick="bk()">बैकअप कॉपी करें</button><label>बैकअप वापस डालें<textarea id="rb" rows="3"></textarea></label><button class="btn" onclick="rs()">वापस डालें</button><button class="btn dg" onclick="if(confirm('सारा डेटा मिट जाएगा। पक्का?')){S={shop:S.shop,p:[],c:[],s:[]};sv();cs();render()}">सारा डेटा मिटाएँ</button>`)}
+function bk(){try{navigator.clipboard.writeText(JSON.stringify(S)).then(()=>toast('कॉपी हो गया, कहीं सेव कर लें'),()=>toast('कॉपी नहीं हो पाया'))}catch(e){toast('कॉपी नहीं हो पाया')}}
+function rs(){try{const d=JSON.parse($('rb').value);if(!d.p||!d.c||!d.s)throw 0;S=d;sv();cs();render();toast('डेटा वापस आ गया')}catch(e){toast('बैकअप सही नहीं है')}}
+const OWN='ayushshyam59@gmail.com',DEF={app:'DukaanOS',sup:'',upi:'',ann:'',mt:0,trial:7,offer:'',plans:[{id:'free',n:'Free',pr:0,mc:20,mp:30,f:'बिक्री, स्टॉक, SMS / Sales, stock, SMS'},{id:'pro',n:'Pro',pr:199,mc:0,mp:0,f:'असीमित ग्राहक और सामान / Unlimited customers and items'},{id:'biz',n:'Business',pr:499,mc:0,mp:0,f:'सब कुछ + सहायता / Everything + priority support'}]};
+let C=JSON.parse(JSON.stringify(DEF)),U={plan:'free',planUntil:0},ME=null,ld=0,st,tp=0,tt,ot='pl',UL=[];
+try{C.lang=localStorage.getItem('dukaanos_lang')||'hi'}catch(e){C.lang='hi'}
+const T=(h,e)=>C.lang==='en'?e:h,eff=()=>U.plan!=='free'&&U.planUntil>Date.now()?U.plan:'free',plan=()=>C.plans.find(x=>x.id===eff())||C.plans[0],isOwner=()=>!!ME&&ME.email===OWN&&ME.emailVerified;
+const D=`सेटिंग|Settings
+नंबर नहीं|No number
+पैसे मिले|Paid
+फ़ोन|Call
+प्रति|each
+बचा है|left
+बचा|left
+आज की बिक्री|Today's sales
+नकद मिला|Paid in cash
+नकद|Cash
+उधार खाता|Udhaar book
+उधार के लिए पहले ग्राहक चुनें|Pick a customer first for udhaar
+उधार|Udhaar
+बिल|bills
+कुल उधार बाकी|Total udhaar due
+कुल|Total
+कम स्टॉक|Low stock
+कम|Less
+ज़्यादा|More
+सामान जोड़ें|Add item
+सामान|items
+शुरू करने के लिए अपना सामान, कीमत और स्टॉक जोड़ें।|To start, add your items, prices and stock.
+इनसे पैसे लेने हैं|Collect from these
+जल्दी मँगाना है|Reorder soon
+आज के बिल|Today's bills
+आज अभी कोई बिक्री नहीं हुई।|No sales yet today.
+नई बिक्री|New sale
+नया ग्राहक|New customer
+SMS और फ़ोन बटन हर साधारण फ़ोन पर चलते हैं, WhatsApp की ज़रूरत नहीं।|SMS and Call work on every basic phone, no WhatsApp needed.
+अभी कोई ग्राहक नहीं। जिन्हें उधार देते हैं, उनका नाम, नंबर और पुराना बाकी जोड़ें।|No customers yet. Add name, number and old balance of people you give udhaar to.
+नया सामान|New item
+सामान पर टैप करके कीमत या स्टॉक बदलें। 5 या कम बचे तो लाल दिखेगा।|Tap an item to change price or stock. Red means 5 or fewer left.
+अभी कोई सामान नहीं। अपनी दुकान का सामान, कीमत और स्टॉक जोड़ें।|No items yet. Add your shop's items, prices and stock.
+पिछले 7 दिन की बिक्री|Last 7 days sales
+सबसे ज़्यादा बिकने वाले|Best sellers
+बिके|sold
+बिक्री होने पर यहाँ दिखेगा।|Shows here once you make sales.
+रवि|Sun
+सोम|Mon
+मंगल|Tue
+बुध|Wed
+गुरु|Thu
+शुक्र|Fri
+शनि|Sat
+होम|Home
+बिक्री सेव करें|Save sale
+बिक्री सेव हो गई|Sale saved
+बिक्री|Sales
+स्टॉक में कितना है|Stock quantity
+स्टॉक में सिर्फ़|Only
+बचे हैं|left in stock
+स्टॉक|Stock
+रिपोर्ट|Report
+सामान नहीं है|No items
+पहले स्टॉक में सामान जोड़ें।|Add items to stock first.
+ग्राहक (उधार के लिए चुनें)|Customer (pick for udhaar)
+सामान्य ग्राहक|Walk-in customer
+कम से कम एक सामान चुनें|Pick at least one item
+सामान बदलें|Edit item
+नाम और कीमत भरें|Enter name and price
+नाम भरें|Enter a name
+नाम|Name
+जैसे: चावल 1 किलो|e.g. Rice 1 kg
+कीमत (₹)|Price (₹)
+सेव करें|Save
+हटाएँ|Delete
+इस सामान को हटाएँ?|Delete this item?
+फ़ोन नंबर (SMS के लिए)|Phone number (for SMS)
+10 अंक|10 digits
+पुराना उधार बाकी (₹), हो तो|Old udhaar balance (₹), if any
+से पैसे मिले|paid you
+अभी बाकी:|Due now:
+कितने मिले (₹)|Amount received (₹)
+रकम भरें|Enter amount
+जमा हो गया|Recorded
+दुकान का नाम|Shop name
+मेरी दुकान|My shop
+आपका डेटा सिर्फ़ इसी फ़ोन के ब्राउज़र में रहता है। ब्राउज़र का डेटा साफ़ करने पर मिट जाएगा, इसलिए बैकअप कॉपी करके कहीं रख लें।|Your data stays only in this phone's browser. Clearing browser data erases it, so copy a backup and keep it safe.
+बैकअप कॉपी करें|Copy backup
+बैकअप वापस डालें|Restore backup
+वापस डालें|Restore
+सारा डेटा मिटाएँ|Erase all data
+सारा डेटा मिट जाएगा। पक्का?|All data will be erased. Sure?
+कॉपी हो गया, कहीं सेव कर लें|Copied, save it somewhere
+कॉपी नहीं हो पाया|Could not copy
+डेटा वापस आ गया|Data restored
+बैकअप सही नहीं है|Backup is not valid`.split('\n').map(l=>l.split('|').map(x=>x.normalize('NFC'))).sort((a,b)=>b[0].length-a[0].length);
+function tr(s){if(C.lang!=='en')return s;s=String(s).normalize('NFC');for(const[h,e]of D)s=s.split(h).join(e);return s}
+function tgl(){C.lang=C.lang==='en'?'hi':'en';try{localStorage.setItem('dukaanos_lang',C.lang)}catch(e){}render();if(!ME)authView()}
+function authView(m){const a=$('au');a.style.display='block';a.innerHTML=`<div class="aw"><button class="sm" style="float:right" onclick="tgl()">${C.lang==='en'?'हिं':'EN'}</button><h1>🏪 ${esc(C.app)}</h1><p class="mut">${T('अपनी दुकान का पूरा हिसाब, एक जगह','Run your whole shop from one place')}</p><label>Email<input id="ae" type="email" autocomplete="email"></label><label>${T('पासवर्ड (कम से कम 6 अक्षर)','Password (min 6 characters)')}<input id="ap2" type="password" autocomplete="current-password"></label>${m?`<p class="red">${esc(m)}</p>`:''}<button class="btn p" onclick="doAuth('in')">${T('लॉगिन','Login')}</button><button class="btn" onclick="doAuth('up')">${T('नया खाता बनाएँ','Create account')}</button><button class="sm" style="margin-top:14px" onclick="doAuth('rs')">${T('पासवर्ड भूल गए?','Forgot password?')}</button></div>`}
+async function doAuth(k){const e=$('ae').value.trim(),p=$('ap2').value,F=window.FB;if(!F)return authView(T('Firebase नहीं चल रहा। इंटरनेट देखें।','Firebase is not working. Check internet.'));if(!e)return authView(T('ईमेल भरें','Enter your email'));
+try{if(k==='rs'){await F.sendPasswordResetEmail(F.auth,e);return authView(T('पासवर्ड रीसेट का लिंक ईमेल पर भेज दिया।','Password reset link sent to your email.'))}
+if(p.length<6)return authView(T('पासवर्ड कम से कम 6 अक्षर का हो','Password must be at least 6 characters'));
+if(k==='up'){const r=await F.createUserWithEmailAndPassword(F.auth,e,p);F.sendEmailVerification(r.user).catch(()=>{})}else await F.signInWithEmailAndPassword(F.auth,e,p)}
+catch(x){authView(T('गड़बड़ हुई: ','Error: ')+(x.code||x.message))}}
+window.onUser=async u=>{ME=u;ld=0;const F=window.FB;if(!u){S={shop:'मेरी दुकान',p:[],c:[],s:[]};U={plan:'free',planUntil:0};render();return authView()}
+try{await u.reload();await u.getIdToken(true);ME=F.auth.currentUser}catch(e){}
+try{const g=await F.getDoc(F.doc(F.db,'config','app'));if(g.exists()){const l=C.lang;C=Object.assign(C,g.data());C.lang=l}}catch(e){}
+try{const r=F.doc(F.db,'users',u.uid),g=await F.getDoc(r);if(g.exists())U=Object.assign({plan:'free',planUntil:0},g.data());else{U={email:u.email,plan:'free',planUntil:0,created:Date.now()};await F.setDoc(r,U)}
+const d=F.doc(F.db,'userdata',u.uid),h=await F.getDoc(d);S=Object.assign({shop:'मेरी दुकान',p:[],c:[],s:[]},h.exists()?h.data():{});if(!h.exists())await F.setDoc(d,S);ld=1}
+catch(e){return authView(T('डेटा लोड नहीं हुआ। इंटरनेट और Firestore नियम देखें: ','Could not load data. Check internet and Firestore rules: ')+(e.code||e.message))}
+$('au').style.display='none';render()};
+function svq(){if(!ld||!ME)return;clearTimeout(st);st=setTimeout(push,700)}
+async function push(){try{S.s=S.s.slice(-400);await FB.setDoc(FB.doc(FB.db,'userdata',ME.uid),S)}catch(e){toast(T('सेव नहीं हुआ, इंटरनेट देखें','Not saved, check internet'))}}
+function tap5(){tp++;clearTimeout(tt);tt=setTimeout(()=>tp=0,1500);if(tp>=5){tp=0;openOwner()}}
+function over(k,a){const m=plan()[k];if(m>0&&a.length>=m){toast(T('इस प्लान की सीमा पूरी हो गई। प्लान अपग्रेड करें।','Plan limit reached. Please upgrade.'));openPlans();return 1}}
+function openPlans(){const e=eff();sheet(`<h2>${T('प्लान','Plans')}</h2>${C.offer?`<p><b>${esc(C.offer)}</b></p>`:''}${C.plans.map(p=>`<div class="pc ${p.id===e?'on':''}"><p><b>${esc(p.n)}</b> ${p.id===e?T('(आपका प्लान)','(your plan)'):''}</p><div class="big" style="font-size:28px">${p.pr?R(p.pr)+T('/माह','/mo'):T('मुफ़्त','Free')}</div><small>${T('ग्राहक','Customers')}: ${p.mc||T('असीमित','Unlimited')}, ${T('सामान','Items')}: ${p.mp||T('असीमित','Unlimited')}</small><div>${esc(p.f)}</div></div>`).join('')}${e!=='free'?`<p class="mut">${T('आपका प्लान चालू है, आख़िरी तारीख','Your plan is active until')}: ${new Date(U.planUntil).toLocaleDateString('en-IN')}</p>`:''}${C.trial?`<p class="mut">${T('मुफ़्त ट्रायल','Free trial')}: ${C.trial} ${T('दिन','days')}</p>`:''}<p class="mut">${T('अपग्रेड के लिए UPI से भुगतान करें और सहायता नंबर पर बताएँ।','To upgrade, pay by UPI and tell the support number.')}</p>${C.upi?`<p><b>UPI: ${esc(C.upi)}</b></p>`:''}${C.sup?`<a class="btn p" style="display:block;text-align:center;line-height:50px;text-decoration:none" href="tel:${esc(C.sup)}">${T('सहायता को फ़ोन करें','Call support')}</a>`:''}`)}
+function openOwner(){if(!ME||ME.email!==OWN)return toast(T('यह सेक्शन सिर्फ़ ओनर के लिए है','This section is for the owner only'));if(!ME.emailVerified){FB.sendEmailVerification(ME).catch(()=>{});return toast(T('पहले ईमेल वेरिफ़ाई करें। लिंक फिर से भेज दिया है।','Verify your email first. Link sent again.'))}ownTab('pl')}
+function ownTab(t){if(t==='us')return ownUsers();ot=t;const tb=[['pl',T('प्लान','Plans')],['ap',T('ऐप','App')],['us',T('यूज़र्स','Users')]];let b='';
+if(t==='pl')b=C.plans.map((p,i)=>`<div class="pc"><label>${T('प्लान का नाम','Plan name')}<input id="n${i}" value="${esc(p.n)}"></label><label>${T('कीमत ₹/माह (0 = मुफ़्त)','Price ₹/month (0 = free)')}<input id="p${i}" type="number" value="${p.pr}"></label><label>${T('अधिकतम ग्राहक (0 = असीमित)','Max customers (0 = unlimited)')}<input id="c${i}" type="number" value="${p.mc}"></label><label>${T('अधिकतम सामान (0 = असीमित)','Max items (0 = unlimited)')}<input id="m${i}" type="number" value="${p.mp}"></label><label>${T('फ़ायदे (एक लाइन)','Features (one line)')}<input id="f${i}" value="${esc(p.f)}"></label></div>`).join('')+`<label>${T('मुफ़्त ट्रायल (दिन)','Free trial (days)')}<input id="tdy" type="number" value="${C.trial}"></label><label>${T('ऑफ़र का मैसेज','Offer message')}<input id="of" value="${esc(C.offer)}" placeholder="50% OFF"></label>`;
+if(t==='ap')b=`<label>${T('ऐप का नाम','App name')}<input id="an2" value="${esc(C.app)}"></label><label>${T('सहायता फ़ोन नंबर','Support phone')}<input id="su" type="tel" value="${esc(C.sup)}"></label><label>UPI ID<input id="up" value="${esc(C.upi)}" placeholder="name@upi"></label><label>${T('घोषणा (होम पर दिखेगी)','Announcement (shown on Home)')}<input id="ann" value="${esc(C.ann)}"></label><label>${T('मेंटेनेंस मोड','Maintenance mode')}<select id="mt2"><option value="0">${T('बंद','Off')}</option><option value="1" ${C.mt?'selected':''}>${T('चालू','On')}</option></select></label>`;
+sheet(`<h2>🔐 ${T('ओनर पैनल','Owner panel')}</h2><div class="seg t3">${tb.map(([k,l])=>`<button class="${k===t?'on':''}" onclick="ownSave();ownTab('${k}')">${l}</button>`).join('')}</div>${b}<button class="btn p" onclick="ownSave(1)">${T('सेव करें','Save')}</button><button class="btn" onclick="cs()">${T('बंद करें','Close')}</button>`)}
+async function ownSave(show){const g=i=>document.getElementById(i);let ch=0;
+if(ot==='pl'&&g('tdy')){C.plans.forEach((p,i)=>{p.n=g('n'+i).value||p.n;p.pr=+g('p'+i).value||0;p.mc=+g('c'+i).value||0;p.mp=+g('m'+i).value||0;p.f=g('f'+i).value});C.trial=+g('tdy').value||0;C.offer=g('of').value;ch=1}
+if(ot==='ap'&&g('an2')){C.app=g('an2').value||'DukaanOS';C.sup=g('su').value.trim();C.upi=g('up').value.trim();C.ann=g('ann').value;C.mt=+g('mt2').value;ch=1}
+if(!ch)return;try{await FB.setDoc(FB.doc(FB.db,'config','app'),{app:C.app,sup:C.sup,upi:C.upi,ann:C.ann,mt:C.mt,trial:C.trial,offer:C.offer,plans:C.plans});render();if(show)toast(T('सबके लिए सेव हो गया','Saved for everyone'))}catch(e){toast(T('सेव नहीं हुआ: ','Not saved: ')+(e.code||e.message))}}
+async function ownUsers(){ot='us';sheet(`<h2>👥</h2><p class="mut">${T('लोड हो रहा है…','Loading…')}</p>`);try{const g=await FB.getDocs(FB.collection(FB.db,'users'));UL=[];g.forEach(d=>UL.push({id:d.id,...d.data()}))}catch(e){return toast(T('यूज़र्स नहीं मिले','Could not load users'))}
+const n=UL.filter(u=>u.plan!=='free'&&u.planUntil>Date.now()).length;
+sheet(`<h2>👥 ${T('यूज़र्स','Users')}</h2><p class="mut">${T('कुल','Total')}: ${UL.length}, ${T('पेड','Paid')}: ${n}</p>${UL.map((u,i)=>`<div class="pc"><p><b>${esc(u.email||'')}</b><br><small>${esc(u.plan)}${u.planUntil>Date.now()?' → '+new Date(u.planUntil).toLocaleDateString('en-IN'):''}</small></p><select id="us${i}">${C.plans.map(p=>`<option value="${p.id}" ${p.id===u.plan?'selected':''}>${esc(p.n)}</option>`).join('')}</select><label>${T('कितने दिन','Days')}<input id="ud${i}" type="number" value="30"></label><button class="btn p" onclick="setUser(${i})">${T('प्लान सेट करें','Set plan')}</button></div>`).join('')}<button class="btn" onclick="ownTab('pl')">${T('वापस','Back')}</button>`)}
+async function setUser(i){const u=UL[i],pid=$('us'+i).value,d=+$('ud'+i).value||0;try{await FB.updateDoc(FB.doc(FB.db,'users',u.id),{plan:pid,planUntil:pid==='free'?0:Date.now()+d*864e5});toast(T('प्लान बदल गया','Plan updated'));ownUsers()}catch(e){toast(T('सेव नहीं हुआ','Could not save'))}}
+$('au').style.display='block';$('au').innerHTML=`<div class="aw"><p class="mut">${T('लोड हो रहा है…','Loading…')}</p></div>`;setTimeout(()=>{if(!window.FB)authView(T('Firebase लोड नहीं हुआ। इंटरनेट देखें और पेज रीफ़्रेश करें।','Firebase did not load. Check internet and refresh.'))},8000);
+render();
+</script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,sendPasswordResetEmail,sendEmailVerification}from"https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+import{getFirestore,doc,getDoc,setDoc,updateDoc,collection,getDocs}from"https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyD0d2grqwj-iCCN_7TA-WtdkRZ691I0Vog",authDomain:"dukaan-os-5035e.firebaseapp.com",projectId:"dukaan-os-5035e",storageBucket:"dukaan-os-5035e.firebasestorage.app",messagingSenderId:"1089744226235",appId:"1:1089744226235:web:dd2db5770a08672534e69e"});
+const auth=getAuth(app),db=getFirestore(app);
+window.FB={auth,db,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut:a=>signOut(a),sendPasswordResetEmail,sendEmailVerification,doc,getDoc,setDoc,updateDoc,collection,getDocs};
+onAuthStateChanged(auth,u=>window.onUser&&window.onUser(u));
+</script>
+</body></html>
