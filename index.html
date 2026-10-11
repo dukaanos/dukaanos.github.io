@@ -22,7 +22,8 @@ h2{font-size:17px;font-weight:800;margin:22px 0 4px}
 .q{display:flex;align-items:center;gap:10px}.q button{width:42px;height:42px;border-radius:12px;border:1.5px solid var(--ac);background:none;color:var(--ac);font-size:22px;font-weight:800}.q span{min-width:24px;text-align:center;font-weight:800}
 label{display:block;margin-top:12px;font-weight:600;font-size:15px}
 input,select,textarea{display:block;width:100%;margin-top:5px;min-height:48px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:17px Mukta,sans-serif}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.seg button{min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:none;color:var(--ink);font:700 16px Mukta,sans-serif}.seg .on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.seg button{min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:none;color:var(--ink);font:700 16px Mukta,sans-serif}.t4 button{font-size:13px!important;padding:0 2px}
+.seg .on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
 .tot{display:flex;justify-content:space-between;align-items:center;margin:14px 0 2px;font-size:19px}.tot b{font-size:26px;color:var(--ac)}
 .empty{padding:16px;border:1.5px dashed var(--line);border-radius:14px;margin:14px 0}
 .bars{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:10px;border-bottom:2px solid var(--ink)}.bars i{flex:1;background:var(--ac);border-radius:5px 5px 0 0}.bl{display:flex;gap:8px}.bl span{flex:1;text-align:center;font-size:13px;color:var(--mut)}
@@ -74,7 +75,7 @@ return `<section class="hero"><small>आज की बिक्री</small><di
 ${S.p.length?'':`<div class="empty">शुरू करने के लिए अपना सामान, कीमत और स्टॉक जोड़ें।<button class="btn p" onclick="openProd()">सामान जोड़ें</button></div>`}
 ${td.length?`<h2>इनसे पैसे लेने हैं</h2>${td.map(crow).join('')}`:''}${low.length?`<h2>जल्दी मँगाना है</h2>${low.slice(0,5).map(prow).join('')}`:''}`},
 sale(){const ts=S.s.filter(x=>x.d===dk()).reverse();return `<div class="btns"><button class="btn p" onclick="openSale()">➕ नई बिक्री</button></div><h2>आज के बिल</h2>${ts.length?ts.map(x=>`<div class="row"><div class="g"><b>${esc(x.items.map(i=>i.n+' × '+i.q).join(', '))}</b><small>${x.t}${x.cn?', '+esc(x.cn):''}</small></div><div class="rt"><strong>${R(x.total)}</strong><small class="${x.cr?'red':''}">${x.cr?'उधार':'नकद'}</small></div></div>`).join(''):'<p class="mut">आज अभी कोई बिक्री नहीं हुई।</p>'}`},
-due(){const c=[...S.c].sort((a,b)=>b.due-a.due);return `<div class="btns"><button class="btn p" onclick="openCust()">➕ नया ग्राहक</button></div><p class="mut">SMS और फ़ोन बटन हर साधारण फ़ोन पर चलते हैं, WhatsApp की ज़रूरत नहीं।</p>${c.length?c.map(crow).join(''):'<p class="mut">अभी कोई ग्राहक नहीं। जिन्हें उधार देते हैं, उनका नाम, नंबर और पुराना बाकी जोड़ें।</p>'}`},
+due(){const c=[...S.c].sort((a,b)=>b.due-a.due);return `<div class="btns c2"><button class="btn p" onclick="openCust()">➕ नया ग्राहक</button><button class="btn p" onclick="voiceUdhaar()">🎤 बोलकर लिखें</button></div><p class="mut">SMS और फ़ोन बटन हर साधारण फ़ोन पर चलते हैं, WhatsApp की ज़रूरत नहीं।</p>${c.length?c.map(crow).join(''):'<p class="mut">अभी कोई ग्राहक नहीं। जिन्हें उधार देते हैं, उनका नाम, नंबर और पुराना बाकी जोड़ें।</p>'}`},
 stock(){return `<div class="btns"><button class="btn p" onclick="openProd()">➕ नया सामान</button></div>${S.p.length?'<p class="mut">सामान पर टैप करके कीमत या स्टॉक बदलें। 5 या कम बचे तो लाल दिखेगा।</p>'+S.p.map(prow).join(''):'<p class="mut">अभी कोई सामान नहीं। अपनी दुकान का सामान, कीमत और स्टॉक जोड़ें।</p>'}`},
 rep(){const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d}),k=days.map(dk),v=k.map(x=>S.s.filter(s=>s.d===x).reduce((a,s)=>a+s.total,0)),mx=Math.max(...v,1),wk=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'],m={};S.s.filter(s=>k.includes(s.d)).forEach(s=>s.items.forEach(i=>m[i.n]=(m[i.n]||0)+i.q));const top=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5);
 return `<section class="hero"><small>पिछले 7 दिन की बिक्री</small><div class="big">${R(v.reduce((a,b)=>a+b,0))}</div></section><div class="bars">${v.map(x=>`<i style="height:${Math.max(x/mx*100,2)}%" title="${R(x)}"></i>`).join('')}</div><div class="bl">${days.map(d=>`<span>${wk[d.getDay()]}</span>`).join('')}</div><h2>सबसे ज़्यादा बिकने वाले</h2>${top.length?top.map(([n,q])=>`<div class="row"><div class="g"><b>${esc(n)}</b></div><div class="rt"><strong>${q}</strong><small>बिके</small></div></div>`).join(''):'<p class="mut">बिक्री होने पर यहाँ दिखेगा।</p>'}${yearSec()}`}};
@@ -102,6 +103,157 @@ function openCust(){sheet(`<h2>नया ग्राहक</h2><label>नाम
 function saveCust(){const n=$('cn').value.trim(),ph=$('cp').value.replace(/[^\d+]/g,''),due=parseFloat($('cd').value)||0;if(!n)return toast('नाम भरें');if(over('mc',S.c))return;S.c.push({id:uid(),n,ph,due});sv();cs();render()}
 function openPay(id){const c=S.c.find(x=>x.id===id);sheet(`<h2>${esc(c.n)} से पैसे मिले</h2><p class="mut">अभी बाकी: ${R(c.due)}</p><label>कितने मिले (₹)<input id="pa" type="number" inputmode="decimal" value="${c.due}"></label><button class="btn p" onclick="savePay('${id}')">सेव करें</button>`)}
 function savePay(id){const a=parseFloat($('pa').value),c=S.c.find(x=>x.id===id);if(!(a>0))return toast('रकम भरें');c.due=Math.max(0,c.due-a);sv();cs();render();toast('जमा हो गया')}
+/*VOICE-START*/
+/* ===== Voice udhaar: बोलकर उधार / पैसे मिले लिखें ===== */
+const W=(h,e)=>h+' / '+e;
+const nk=s=>String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[\u093C\u0901\u0902]/g,'').normalize('NFC');
+const VNW=Object.create(null),VMU=Object.create(null),VMD=Object.create(null);
+(function(){
+const add=(o,list,v)=>list.split(' ').forEach(w=>{o[nk(w)]=v});
+'एक दो तीन चार पाँच छह सात आठ नौ दस ग्यारह बारह तेरह चौदह पंद्रह सोलह सत्रह अठारह उन्नीस बीस इक्कीस बाईस तेईस चौबीस पच्चीस छब्बीस सत्ताईस अट्ठाईस उनतीस तीस इकतीस बत्तीस तैंतीस चौंतीस पैंतीस छत्तीस सैंतीस अड़तीस उनतालीस चालीस इकतालीस बयालीस तैंतालीस चौवालीस पैंतालीस छियालीस सैंतालीस अड़तालीस उनचास पचास इक्यावन बावन तिरपन चौवन पचपन छप्पन सत्तावन अट्ठावन उनसठ साठ इकसठ बासठ तिरसठ चौंसठ पैंसठ छियासठ सड़सठ अड़सठ उनहत्तर सत्तर इकहत्तर बहत्तर तिहत्तर चौहत्तर पचहत्तर छिहत्तर सतहत्तर अठहत्तर उनासी अस्सी इक्यासी बयासी तिरासी चौरासी पचासी छियासी सत्तासी अट्ठासी नवासी नब्बे इक्यानवे बानवे तिरानवे चौरानवे पचानवे छियानवे सत्तानवे अट्ठानवे निन्यानवे'.split(' ').forEach((w,i)=>{VNW[nk(w)]=i+1});
+[['छः',6],['छे',6],['छ',6],['पन्द्रह',15],['अठाईस',28],['उन्तीस',29],['बाइस',22],['तेइस',23],['तेंतीस',33],['चौतीस',34],['पैतीस',35],['पिचहत्तर',75],['पचासी',85],['नब्बे',90],['अट्ठारह',18],['सतरह',17],['उनतालिस',39],['उनचास',49],['इक्यावन',51],['तिरेसठ',63]].forEach(([w,v])=>{VNW[nk(w)]=v});
+'one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split(' ').forEach((w,i)=>{VNW[w]=i+1});
+'twenty thirty forty fifty sixty seventy eighty ninety'.split(' ').forEach((w,i)=>{VNW[w]=(i+2)*10});
+add(VMU,'सौ hundred',100);add(VMU,'हज़ार हजार thousand',1000);add(VMU,'लाख lakh lakhs lac lacs',100000);add(VMU,'करोड़ करोड crore crores',10000000);
+add(VMD,'डेढ़ डेढ',1);add(VMD,'ढाई',2);add(VMD,'साढ़े साढे',3);add(VMD,'पौने',4);add(VMD,'सवा',5);
+})();
+const vset=l=>new Set(l.split(' ').map(nk));
+const V_CUR=vset('रुपये रुपए रुपया रूपये रुपयों रु rs rupees rupee ₹');
+const V_PAY=vset('जमा मिले मिला मिली वापस चुका चुकाए चुकाया चुकाये चुकता लौटा लौटाए लौटाया भुगतान paid pay received receive deposit returned return payment');
+const V_ADD=vset('जोड़ो जोड़ जोड़ना जोड़ें लिखो लिखना लिख लिखें add');
+const V_UDH=vset('उधार उधारी उधर udhaar udhar udhari credit baaki baki बाकी');
+const V_NE=vset('ने से from');
+const V_KO=vset('को to for');
+const V_STOP=new Set([...V_CUR,...V_PAY,...V_ADD,...V_UDH,...V_NE,...V_KO,...vset('का की के पर में ही भी तो है हैं हो गया गए गई करो कर करें दीजिए कीजिए दे दिया दिए दिये दो खाते खाता और ka ko se ne ki ke the a of please plz amount rupay')]);
+function vcls(t){
+if(/^\d+(\.\d+)?$/.test(t))return{t:'n',v:parseFloat(t),d:1};
+const k=nk(t).replace(/[.:]/g,'');
+if(k in VNW)return{t:'n',v:VNW[k]};
+if(k in VMU)return{t:'m',v:VMU[k]};
+if(k in VMD)return{t:'x',k:VMD[k]};
+return null}
+function vruns(cl){
+const runs=[];let i=0;
+while(i<cl.length){
+if(!cl[i]){i++;continue}
+let j=i+1;
+while(j<cl.length&&cl[j]&&!(cl[j-1].d&&cl[j].t==='n'))j++;
+if(cl.slice(i,j).some(c=>c.t==='n'||c.t==='m'))runs.push([i,j]);
+i=j}
+return runs}
+function vval(cl){
+let tot=0,cur=0,mod=0;
+for(let k=0;k<cl.length;k++){
+const c=cl[k];
+if(c.t==='n'){let v=c.v;if(mod===3)v+=.5;else if(mod===4)v-=.25;else if(mod===5)v+=.25;mod=0;cur+=v}
+else if(c.t==='m'){if(c.v===100)cur=(cur||1)*100;else{tot+=(cur||1)*c.v;cur=0}}
+else{
+if(c.k===1)cur+=1.5;
+else if(c.k===2)cur+=2.5;
+else if(c.k===3||c.k===4)mod=c.k;
+else if(c.k===5){const nx=cl[k+1];if(nx&&nx.t==='n')mod=5;else cur+=1.25}}}
+return Math.round((tot+cur)*100)/100}
+function vlev(a,b){
+const m=a.length,n=b.length,d=[];
+for(let i=0;i<=m;i++){d[i]=[i];for(let j=1;j<=n;j++)d[i][j]=i?0:j}
+for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+return d[m][n]}
+function vparse(text){
+let s=String(text||'').replace(/[०-९]/g,d=>'०१२३४५६७८९'.indexOf(d)).replace(/(\d),(?=\d{2,3}\b)/g,'$1').replace(/₹/g,' ₹ ');
+const ts=(s.match(/\d+(?:\.\d+)?|[^\s\d,।?!]+/g)||[]).map(x=>x.replace(/^[.:;'"-]+|[.:;'"-]+$/g,'')).filter(Boolean);
+const cl=ts.map(vcls),runs=vruns(cl);
+let pick=runs.find(([a,b])=>(ts[b]&&V_CUR.has(nk(ts[b])))||(ts[a-1]&&V_CUR.has(nk(ts[a-1]))))||runs[0],amt=0,inRun=new Set();
+if(pick){amt=vval(cl.slice(pick[0],pick[1]));for(let k=pick[0];k<pick[1];k++)inRun.add(k)}
+const keys=ts.map(nk),has=S_=>keys.some(k=>S_.has(k));
+const hAdd=has(V_ADD),hPay=has(V_PAY),hUdh=has(V_UDH),hNe=has(V_NE),hKo=has(V_KO);
+let pay=0;
+if(hAdd)pay=0;else if(hPay)pay=1;else if(hUdh)pay=0;else if(hNe&&!hKo)pay=1;else pay=0;
+const nameToks=ts.filter((t,k)=>!inRun.has(k)&&!cl[k]&&!V_STOP.has(keys[k])).slice(0,3);
+return{amt,name:nameToks.join(' '),toks:nameToks,pay,sure:hAdd||hPay||hUdh||hNe||hKo}}
+function vmatch(toks){
+const sp=toks.map(nk).filter(x=>x.length>0);
+if(!sp.length)return{id:'',amb:false};
+const sc=[];
+S.c.forEach(c=>{
+let best=99;
+nk(c.n).split(/\s+/).forEach(t=>sp.forEach(x=>{
+if(x===t){best=Math.min(best,0);return}
+if(Math.min(x.length,t.length)<3)return;
+const d=vlev(x,t),lim=Math.max(x.length,t.length)>=8?2:1;
+if(d<=lim)best=Math.min(best,d)}));
+if(best<99)sc.push({id:c.id,s:best})});
+sc.sort((a,b)=>a.s-b.s);
+if(!sc.length)return{id:'',amb:false};
+if(sc[1]&&sc[1].s===sc[0].s)return{id:'',amb:true};
+return{id:sc[0].id,amb:false}}
+let VOICE={pay:0,name:'',text:''},VR=null;
+function voiceStop(){try{if(VR){VR.onend=null;VR.onerror=null;VR.onresult=null;VR.abort()}}catch(_){}VR=null;cs()}
+function voiceUdhaar(){
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR)return toast(W('इस ब्राउज़र में voice नहीं चलता, Chrome खोलें','Voice is not supported here, please open Chrome'));
+if(navigator.onLine===false)return toast(W('इंटरनेट चालू करें, voice के लिए ज़रूरी है','Turn on the internet, voice needs it'));
+let done=0;
+const r=new SR();VR=r;
+r.lang=C.lang==='en'?'en-IN':'hi-IN';r.interimResults=false;r.continuous=false;r.maxAlternatives=3;
+sheet(`<h2>🎤 ${T('सुन रहा हूँ…','Listening…')}</h2><p class="mut">${T('बोलें: "राम को 500 उधार" या "राम से 200 मिले"','Say: "Ram 500 udhaar" or "received 200 from Ram"')}</p><button class="btn" onclick="voiceStop()">${T('रद्द करें','Cancel')}</button>`);
+r.onresult=e=>{done=1;VR=null;voiceHandle([...e.results[0]].map(a=>a.transcript))};
+r.onerror=e=>{
+if(done)return;done=1;VR=null;cs();
+const m={'not-allowed':W('माइक्रोफ़ोन की अनुमति दें','Please allow the microphone'),'service-not-allowed':W('माइक्रोफ़ोन की अनुमति दें','Please allow the microphone'),'no-speech':W('आवाज़ सुनाई नहीं दी, दोबारा बोलें','Could not hear you, please speak again'),'network':W('इंटरनेट की दिक्कत है','Internet problem'),'audio-capture':W('माइक्रोफ़ोन नहीं मिला','Microphone not found'),'aborted':''}[e.error];
+if(m!=='')toast(m||W('आवाज़ समझ नहीं आई, दोबारा बोलें','Could not understand, please try again'))};
+r.onend=()=>{if(!done){done=1;VR=null;cs();toast(W('आवाज़ सुनाई नहीं दी, दोबारा बोलें','Could not hear you, please speak again'))}};
+try{r.start()}catch(_){cs();toast(W('माइक्रोफ़ोन शुरू नहीं हुआ, दोबारा दबाएँ','Mic did not start, please tap again'))}}
+function voiceHandle(alts){
+let p=null;
+for(const a of alts){const q=vparse(a);if(q.amt>0){p=q;p.text=a;break}}
+if(!p){p=vparse(alts[0]);p.text=alts[0]}
+const m=vmatch(p.toks);
+VOICE={pay:p.pay,name:p.name,text:p.text};
+const warn=[];
+if(!(p.amt>0))warn.push(W('रकम समझ नहीं आई, नीचे खुद भरें','Amount not understood, please enter it below'));
+if(m.amb)warn.push(W('इस नाम के कई ग्राहक हैं, सही चुनें','Several customers match, please pick the right one'));
+else if(!m.id&&p.name)warn.push(W('ग्राहक नहीं मिला, नीचे चुनें या नया बनाएँ','Customer not found, pick below or create new'));
+else if(!p.name)warn.push(W('नाम समझ नहीं आया, नीचे चुनें','Name not understood, please pick below'));
+if(!p.sure)warn.push(W('उधार या पैसे मिले, ये पक्का नहीं है। जाँच लें','Not sure if udhaar or payment, please check'));
+const opts=`<option value="">${T('ग्राहक चुनें','Choose customer')}</option>`+S.c.map(c=>`<option value="${c.id}" ${c.id===m.id?'selected':''}>${esc(c.n)} (${R(c.due)})</option>`).join('')+(p.name?`<option value="__new">➕ ${T('नया ग्राहक','New customer')}: ${esc(p.name)}</option>`:'');
+sheet(`<h2>🎤 ${T('जाँचकर सेव करें','Check and save')}</h2><p class="mut" id="vh"></p>${warn.map(w=>`<p style="color:#FFB400;font-weight:700">⚠️ ${esc(w)}</p>`).join('')}<label>${T('ग्राहक','Customer')}<select id="vc">${opts}</select></label><label>${T('रकम (₹)','Amount (₹)')}<input id="va" type="number" inputmode="decimal" value="${p.amt>0?p.amt:''}"></label><div class="seg"><button id="vb0" class="${VOICE.pay?'':'on'}" onclick="voicePay(0)">${T('उधार दिया','Gave udhaar')}</button><button id="vb1" class="${VOICE.pay?'on':''}" onclick="voicePay(1)">${T('पैसे मिले','Got paid')}</button></div><button class="btn p" onclick="voiceSave()">${T('सेव करें','Save')}</button><button class="btn" onclick="voiceUdhaar()">🎤 ${T('दोबारा बोलें','Speak again')}</button><button class="btn" onclick="cs()">${T('रद्द करें','Cancel')}</button>`);
+$('vh').textContent='"'+p.text+'"'}
+function voicePay(v){VOICE.pay=v;$('vb0').className=v?'':'on';$('vb1').className=v?'on':''}
+function voiceSave(){
+const sel=$('vc').value,amt=Math.round(parseFloat($('va').value)*100)/100,pay=VOICE.pay;
+if(!sel)return toast(W('पहले ग्राहक चुनें','Pick a customer first'));
+if(!(amt>0))return toast(W('सही रकम भरें','Enter a valid amount'));
+if(amt>=100000&&!confirm(W('रकम बहुत बड़ी है: '+R(amt)+'। सही है?','Amount is very large: '+R(amt)+'. Is it correct?')))return;
+let c;
+if(sel==='__new'){
+if(pay)return toast(W('नए ग्राहक का कोई बाकी नहीं है','A new customer has no balance to pay'));
+if(over('mc',S.c))return;
+c={id:uid(),n:VOICE.name,ph:'',due:0};S.c.push(c)}
+else c=S.c.find(x=>x.id===sel);
+if(!c)return toast(W('ग्राहक नहीं मिला','Customer not found'));
+if(pay){
+if(amt>c.due&&!confirm(W('रकम बाकी ('+R(c.due)+') से ज़्यादा है। फिर भी सेव करें?','Amount is more than the balance ('+R(c.due)+'). Save anyway?')))return;
+c.due=Math.max(0,Math.round((c.due-amt)*100)/100)}
+else c.due=Math.round((c.due+amt)*100)/100;
+sv();cs();render();
+toast(W(c.n+': '+(pay?'जमा ':'उधार ')+R(amt)+' सेव हुआ','Saved: '+c.n+' '+(pay?'paid ':'udhaar ')+R(amt)))}
+/*VOICE-END*/
+
+/*REFERRAL-START*/
+const myCode=()=>ME?'DK'+ME.uid.slice(0,6).toUpperCase():'';
+function myRef(){const c=myCode(),m=T('DukaanOS से दुकान का हिसाब आसान हुआ। साइनअप पर मेरा रेफ़रल कोड डालें: ','DukaanOS made my shop accounts easy. Use my referral code when you sign up: ')+c+' https://dukaanos.github.io';return `<h2>🤝 ${T('मेरा रेफ़रल कोड','My referral code')}</h2><div class="row" style="cursor:default"><div class="g"><small>${T('दूसरे दुकानदार नया खाता बनाते समय ये कोड डालें','Other shopkeepers enter this code when creating an account')}</small><b style="font-size:22px;letter-spacing:2px">${c}</b></div></div><a class="btn" style="display:flex;align-items:center;justify-content:center;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(m)}">${T('WhatsApp पर भेजें','Share on WhatsApp')}</a>`}
+function cfgObj(){return{app:C.app,sup:C.sup,upi:C.upi,qr:C.qr||'',ann:C.ann,mt:C.mt,trial:C.trial,offer:C.offer,plans:C.plans,refPct:C.refPct==null?30:C.refPct,refPaid:C.refPaid||{}}}
+function cfgPush(){return FB.setDoc(FB.doc(FB.db,'config','app'),cfgObj())}
+async function ownRef(){
+ot='rf';sheet(`<h2>🤝</h2><p class="mut">${T('लोड हो रहा है…','Loading…')}</p>`);
+try{const g=await FB.getDocs(FB.collection(FB.db,'users'));UL=[];g.forEach(d=>UL.push({id:d.id,...d.data()}))}catch(e){return toast(T('यूज़र्स नहीं मिले','Could not load users'))}
+const pct=C.refPct==null?30:C.refPct,paid=C.refPaid||{},m={};
+UL.forEach(u=>{if(!u.ref)return;const r=m[u.ref]=m[u.ref]||{s:0,p:0,amt:0},a=(u.pay||[]).reduce((x,y)=>x+(+y.amt||0),0);r.s++;if(a>0){r.p++;r.amt+=a}});
+const rows=Object.entries(m).sort((a,b)=>b[1].amt-a[1].amt);
+sheet(`<h2>🤝 ${T('रेफ़रल हिसाब','Referral accounts')}</h2><p class="mut">${T('कमीशन सिर्फ़ उन भुगतानों पर बनता है जो आपने "प्लान सेट करें" से पक्के किए। फ्री यूज़र पर कुछ नहीं बनता।','Commission is counted only on payments you confirmed with "Set plan". Free users earn nothing.')}</p><label>${T('कमीशन % (हर पक्के भुगतान पर)','Commission % (on every confirmed payment)')}<input id="rpct" type="number" value="${pct}"></label><button class="btn" onclick="refPct()">${T('% सेव करें','Save %')}</button>${rows.length?rows.map(([c,r],i)=>{const com=Math.round(r.amt*pct/100),pd=+paid[c]||0,due=com-pd;return `<div class="pc"><p><b>${esc(c)}</b><br><small>${T('साइनअप','Signups')}: ${r.s}, ${T('पेड','Paid')}: ${r.p}, ${T('कुल भुगतान','Total paid')}: ${R(r.amt)}<br>${T('कमीशन बना','Commission')}: ${R(com)}, ${T('दिया','Paid out')}: ${R(pd)}, <b class="${due>0?'red':''}">${T('बाकी','Due')}: ${R(due)}</b></small></p><label>${T('अब दिया (₹)','Paid now (₹)')}<input id="rq${i}" type="number" value="${due>0?due:''}"></label><button class="btn p" onclick="refPay('${esc(c)}',${i})">${T('दिया, हिसाब में जोड़ें','Mark as paid')}</button></div>`}).join(''):`<p class="mut">${T('अभी किसी ने रेफ़रल कोड से साइनअप नहीं किया।','Nobody has signed up with a referral code yet.')}</p>`}<button class="btn" onclick="ownTab('pl')">${T('वापस','Back')}</button>`)}
+async function refPct(){const v=parseFloat($('rpct').value);if(!(v>=0&&v<=100))return toast(W('0 से 100 के बीच % डालें','Enter a % between 0 and 100'));C.refPct=v;try{await cfgPush();toast(W('सेव हो गया','Saved'));ownRef()}catch(e){toast(W('सेव नहीं हुआ','Could not save'))}}
+async function refPay(c,i){const a=parseFloat($('rq'+i).value);if(!(a>0))return toast(W('सही रकम भरें','Enter a valid amount'));C.refPaid=Object.assign({},C.refPaid||{});C.refPaid[c]=Math.round(((+C.refPaid[c]||0)+a)*100)/100;try{await cfgPush();toast(W('हिसाब में जुड़ गया','Added to the record'));ownRef()}catch(e){toast(W('सेव नहीं हुआ','Could not save'))}}
+/*REFERRAL-END*/
 function openSet(){sheet(`<h2>सेटिंग</h2><label>दुकान का नाम<input id="sn2" value="${esc(S.shop)}"></label><button class="btn p" onclick="S.shop=$('sn2').value.trim()||'मेरी दुकान';sv();cs();render()">सेव करें</button><p class="mut">${T('आपका डेटा आपके खाते में ऑनलाइन सेव होता है। चाहें तो बैकअप कॉपी भी रख सकते हैं।','Your data is saved online in your account. You can still copy a backup.')}</p><button class="btn" onclick="FB.signOut(FB.auth)">${T('लॉग आउट','Log out')}</button><button class="btn" onclick="openPlans()">💎 ${T('प्लान','Plans')}</button><button class="btn" onclick="bk()">बैकअप कॉपी करें</button><label>बैकअप वापस डालें<textarea id="rb" rows="3"></textarea></label><button class="btn" onclick="rs()">वापस डालें</button><button class="btn dg" onclick="if(confirm('सारा डेटा मिट जाएगा। पक्का?')){S={shop:S.shop,p:[],c:[],s:[]};sv();cs();render()}">सारा डेटा मिटाएँ</button>`)}
 function bk(){try{navigator.clipboard.writeText(JSON.stringify(S)).then(()=>toast('कॉपी हो गया, कहीं सेव कर लें'),()=>toast('कॉपी नहीं हो पाया'))}catch(e){toast('कॉपी नहीं हो पाया')}}
 function rs(){try{const d=JSON.parse($('rb').value);if(!d.p||!d.c||!d.s)throw 0;S=d;sv();cs();render();toast('डेटा वापस आ गया')}catch(e){toast('बैकअप सही नहीं है')}}
@@ -196,19 +348,20 @@ SMS और फ़ोन बटन हर साधारण फ़ोन पर 
 कॉपी हो गया, कहीं सेव कर लें|Copied, save it somewhere
 कॉपी नहीं हो पाया|Could not copy
 डेटा वापस आ गया|Data restored
-बैकअप सही नहीं है|Backup is not valid`.split('\n').map(l=>l.split('|').map(x=>x.normalize('NFC'))).sort((a,b)=>b[0].length-a[0].length);
+बैकअप सही नहीं है|Backup is not valid
+🎤 बोलकर लिखें|🎤 Speak to add`.split('\n').map(l=>l.split('|').map(x=>x.normalize('NFC'))).sort((a,b)=>b[0].length-a[0].length);
 function tr(s){if(C.lang!=='en')return s;s=String(s).normalize('NFC');for(const[h,e]of D)s=s.split(h).join(e);return s}
 function tgl(){C.lang=C.lang==='en'?'hi':'en';try{localStorage.setItem('dukaanos_lang',C.lang)}catch(e){}render();if(!ME)authView()}
-function authView(m){const a=$('au');a.style.display='block';a.innerHTML=`<div class="aw"><button class="sm" style="float:right" onclick="tgl()">${C.lang==='en'?'हिं':'EN'}</button><h1 style="display:flex;align-items:center;gap:10px">${LOGO}${esc(C.app)}</h1><p class="mut">${T('अपनी दुकान का पूरा हिसाब, एक जगह','Run your whole shop from one place')}</p><label>Email<input id="ae" type="email" autocomplete="email"></label><label>${T('पासवर्ड (कम से कम 6 अक्षर)','Password (min 6 characters)')}<input id="ap2" type="password" autocomplete="current-password"></label>${m?`<p class="red">${esc(m)}</p>`:''}<button class="btn p" onclick="doAuth('in')">${T('लॉगिन','Login')}</button><button class="btn" onclick="doAuth('up')">${T('नया खाता बनाएँ','Create account')}</button><button class="sm" style="margin-top:14px" onclick="doAuth('rs')">${T('पासवर्ड भूल गए?','Forgot password?')}</button></div>`}
+function authView(m){const a=$('au');a.style.display='block';a.innerHTML=`<div class="aw"><button class="sm" style="float:right" onclick="tgl()">${C.lang==='en'?'हिं':'EN'}</button><h1 style="display:flex;align-items:center;gap:10px">${LOGO}${esc(C.app)}</h1><p class="mut">${T('अपनी दुकान का पूरा हिसाब, एक जगह','Run your whole shop from one place')}</p><label>${T('रेफ़रल कोड (हो तो, सिर्फ़ नया खाता बनाते समय)','Referral code (if any, only when creating an account)')}<input id="ar" autocapitalize="characters" autocomplete="off" value="${esc(window.PENDREF||'')}" placeholder="AMIT1"></label><label>Email<input id="ae" type="email" autocomplete="email"></label><label>${T('पासवर्ड (कम से कम 6 अक्षर)','Password (min 6 characters)')}<input id="ap2" type="password" autocomplete="current-password"></label>${m?`<p class="red">${esc(m)}</p>`:''}<button class="btn p" onclick="doAuth('in')">${T('लॉगिन','Login')}</button><button class="btn" onclick="doAuth('up')">${T('नया खाता बनाएँ','Create account')}</button><button class="sm" style="margin-top:14px" onclick="doAuth('rs')">${T('पासवर्ड भूल गए?','Forgot password?')}</button></div>`}
 async function doAuth(k){const e=$('ae').value.trim(),p=$('ap2').value,F=window.FB;if(!F)return authView(T('Firebase नहीं चल रहा। इंटरनेट देखें।','Firebase is not working. Check internet.'));if(!e)return authView(T('ईमेल भरें','Enter your email'));
 try{if(k==='rs'){await F.sendPasswordResetEmail(F.auth,e);return authView(T('पासवर्ड रीसेट का लिंक ईमेल पर भेज दिया।','Password reset link sent to your email.'))}
 if(p.length<6)return authView(T('पासवर्ड कम से कम 6 अक्षर का हो','Password must be at least 6 characters'));
-if(k==='up'){const r=await F.createUserWithEmailAndPassword(F.auth,e,p);F.sendEmailVerification(r.user).catch(()=>{})}else await F.signInWithEmailAndPassword(F.auth,e,p)}
+if(k==='up'){window.PENDREF=(($('ar')||{}).value||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);const r=await F.createUserWithEmailAndPassword(F.auth,e,p);F.sendEmailVerification(r.user).catch(()=>{})}else await F.signInWithEmailAndPassword(F.auth,e,p)}
 catch(x){authView(T('गड़बड़ हुई: ','Error: ')+(x.code||x.message))}}
 window.onUser=async u=>{ME=u;ld=0;const F=window.FB;if(!u){S={shop:'मेरी दुकान',p:[],c:[],s:[]};U={plan:'free',planUntil:0};render();return authView()}
 try{await u.reload();await u.getIdToken(true);ME=F.auth.currentUser}catch(e){}
 try{const g=await F.getDoc(F.doc(F.db,'config','app'));if(g.exists()){const l=C.lang;C=Object.assign(C,g.data());C.lang=l;if(!C.sup)C.sup=DEF.sup;if(!C.upi)C.upi=DEF.upi}}catch(e){}ensureYr();
-try{const r=F.doc(F.db,'users',u.uid),g=await F.getDoc(r);if(g.exists())U=Object.assign({plan:'free',planUntil:0},g.data());else{U={email:u.email,plan:'free',planUntil:0,created:Date.now()};await F.setDoc(r,U)}
+try{const r=F.doc(F.db,'users',u.uid),g=await F.getDoc(r);if(g.exists())U=Object.assign({plan:'free',planUntil:0},g.data());else{U={email:u.email,plan:'free',planUntil:0,created:Date.now(),ref:window.PENDREF||''};window.PENDREF='';await F.setDoc(r,U)}
 const d=F.doc(F.db,'userdata',u.uid),h=await F.getDoc(d);S=Object.assign({shop:'मेरी दुकान',p:[],c:[],s:[]},h.exists()?h.data():{});if(!h.exists())await F.setDoc(d,S);ld=1}
 catch(e){return authView(T('डेटा लोड नहीं हुआ। इंटरनेट और Firestore नियम देखें: ','Could not load data. Check internet and Firestore rules: ')+(e.code||e.message))}
 $('au').style.display='none';render()};
@@ -226,18 +379,18 @@ function yearSec(){const m=monthly(),n=MN(),ks=[...Array(12)].map((_,i)=>{const 
 return `<h2>📅 ${T('पूरे साल की बिक्री (पिछले 12 महीने)','Yearly sales (last 12 months)')}</h2><div class="big" style="font-size:36px">${R(tot)}</div>${tot?`<small>${T('सबसे अच्छा महीना','Best month')}: ${lb(ks[bi])} (${R(v[bi])})</small>`:''}<div class="bars" style="gap:4px">${v.map((x,i)=>`<i style="height:${Math.max(x/mx*100,2)}%" title="${R(x)}"></i>`).join('')}</div><div class="bl" style="gap:4px">${ks.map(k=>`<span style="font-size:10px">${n[+k.slice(5)-1]}</span>`).join('')}</div>${[...ks].reverse().map(k=>{const x=m[k]||{t:0,b:0};return `<div class="row"><div class="g"><b>${lb(k)}</b><small>${x.b} ${T('बिल','bills')}</small></div><div class="rt"><strong>${R(x.t)}</strong></div></div>`}).join('')}`}
 function openProfile(){if(!ME)return;const md=ME.metadata||{},fd=t=>t?new Date(t).toLocaleDateString('en-IN'):'-',pv=(ME.providerData||[]).map(x=>x.providerId==='password'?T('ईमेल + पासवर्ड','Email + password'):x.providerId).join(', ')||'-',e=eff(),pl=plan(),pays=[...(U.pay||[])].reverse(),sum=Object.values(monthly()).reduce((a,x)=>a+x.t,0),due=S.c.reduce((a,x)=>a+x.due,0),mn=d=>new Date(d).toLocaleDateString(C.lang==='en'?'en-IN':'hi-IN',{month:'long',year:'numeric'}),row=(a,b)=>`<div class="row" style="cursor:default"><div class="g"><small>${a}</small><b>${b}</b></div></div>`;
 sheet(`<h2>👤 ${T('मेरी प्रोफ़ाइल','My profile')}</h2>${row('Email',esc(ME.email))}${row(T('लॉगिन तरीका','Login method'),esc(pv))}${row(T('ईमेल वेरिफ़ाई','Email verified'),ME.emailVerified?'✅ '+T('हाँ','Yes'):'❌ '+T('नहीं','No'))}${row(T('दुकान का नाम','Shop name'),esc(S.shop))}<label>${T('मेरा फ़ोन नंबर','My phone number')}<input id="ph" type="tel" inputmode="tel" value="${esc(S.ph||'')}" placeholder="10 ${T('अंक','digits')}"></label><button class="btn p" onclick="S.ph=$('ph').value.replace(/[^\\d+]/g,'');sv();toast('${T('सेव हो गया','Saved')}')">${T('नंबर सेव करें','Save number')}</button>${row(T('खाता बना','Account created'),fd(md.creationTime))}${row(T('पिछला लॉगिन','Last login'),fd(md.lastSignInTime))}
-<h2>💎 ${T('प्लान','Plan')}</h2>${row(T('अभी का प्लान','Current plan'),esc(pl.n)+(e!=='free'?' → '+fd(U.planUntil):''))}<button class="btn" onclick="openPlans()">${T('प्लान बदलें / अपग्रेड','Change plan / Upgrade')}</button>
+${e!=='free'?myRef():''}<h2>💎 ${T('प्लान','Plan')}</h2>${row(T('अभी का प्लान','Current plan'),esc(pl.n)+(e!=='free'?' → '+fd(U.planUntil):''))}<button class="btn" onclick="openPlans()">${T('प्लान बदलें / अपग्रेड','Change plan / Upgrade')}</button>
 <h2>🧾 ${T('भुगतान का इतिहास','Payment history')}</h2>${pays.length?pays.map(x=>`<div class="row" style="cursor:default"><div class="g"><b>${esc(x.n||x.plan)} — ${mn(x.t)}</b><small>${T('तारीख','Date')}: ${fd(x.t)}, ${x.days} ${T('दिन','days')}, ${T('चालू','valid till')} ${fd(x.until)}</small></div><div class="rt"><strong>${R(x.amt)}</strong></div></div>`).join(''):`<p class="mut">${T('अभी कोई भुगतान नहीं।','No payments yet.')}</p>`}
 <h2>📊 ${T('अब तक का इस्तेमाल','Usage so far')}</h2>${row(T('सामान','Items'),S.p.length+(pl.mp?' / '+pl.mp:''))}${row(T('ग्राहक','Customers'),S.c.length+(pl.mc?' / '+pl.mc:''))}${row(T('कुल बिल','Total bills'),Object.values(monthly()).reduce((a,x)=>a+x.b,0))}${row(T('कुल बिक्री','Total sales'),R(sum))}${row(T('कुल उधार बाकी','Total udhaar due'),R(due))}<button class="btn" onclick="cs()">${T('बंद करें','Close')}</button>`)}
 function openOwner(){if(!ME||ME.email!==OWN)return toast(T('यह सेक्शन सिर्फ़ ओनर के लिए है','This section is for the owner only'));if(!ME.emailVerified){FB.sendEmailVerification(ME).catch(()=>{});return toast(T('पहले ईमेल वेरिफ़ाई करें। लिंक फिर से भेज दिया है।','Verify your email first. Link sent again.'))}ownTab('pl')}
-function ownTab(t){if(t==='us')return ownUsers();ot=t;const tb=[['pl',T('प्लान','Plans')],['ap',T('ऐप','App')],['us',T('यूज़र्स','Users')]];let b='';
+function ownTab(t){if(t==='us')return ownUsers();if(t==='rf')return ownRef();ot=t;const tb=[['pl',T('प्लान','Plans')],['ap',T('ऐप','App')],['us',T('यूज़र्स','Users')],['rf',T('रेफ़रल','Referral')]];let b='';
 if(t==='pl')b=C.plans.map((p,i)=>`<div class="pc"><label>${T('प्लान का नाम','Plan name')}<input id="n${i}" value="${esc(p.n)}"></label><label>${p.yr?T('कीमत ₹/साल','Price ₹/year'):T('कीमत ₹/माह (0 = मुफ़्त)','Price ₹/month (0 = free)')}<input id="p${i}" type="number" value="${p.pr}"></label><label>${T('अधिकतम ग्राहक (0 = असीमित)','Max customers (0 = unlimited)')}<input id="c${i}" type="number" value="${p.mc}"></label><label>${T('अधिकतम सामान (0 = असीमित)','Max items (0 = unlimited)')}<input id="m${i}" type="number" value="${p.mp}"></label><label>${T('फ़ायदे (एक लाइन)','Features (one line)')}<input id="f${i}" value="${esc(p.f)}"></label></div>`).join('')+`<label>${T('मुफ़्त ट्रायल (दिन)','Free trial (days)')}<input id="tdy" type="number" value="${C.trial}"></label><label>${T('ऑफ़र का मैसेज','Offer message')}<input id="of" value="${esc(C.offer)}" placeholder="50% OFF"></label>`;
 if(t==='ap')b=`<label>${T('ऐप का नाम','App name')}<input id="an2" value="${esc(C.app)}"></label><label>${T('सहायता फ़ोन नंबर','Support phone')}<input id="su" type="tel" value="${esc(C.sup)}"></label><label>UPI ID<input id="up" value="${esc(C.upi)}" placeholder="name@upi"></label><label>${T('पेमेंट QR (फ़ोटो)','Payment QR (photo)')}<input type="file" accept="image/*" onchange="qrPick(this)"></label><div id="qrp">${C.qr?`<img src="${C.qr}" style="width:140px;background:#fff;padding:6px;border-radius:10px">`:''}</div><button class="btn" onclick="qrDel()">${T('QR हटाएँ','Remove QR')}</button><label>${T('घोषणा (होम पर दिखेगी)','Announcement (shown on Home)')}<input id="ann" value="${esc(C.ann)}"></label><label>${T('मेंटेनेंस मोड','Maintenance mode')}<select id="mt2"><option value="0">${T('बंद','Off')}</option><option value="1" ${C.mt?'selected':''}>${T('चालू','On')}</option></select></label>`;
-sheet(`<h2>🔐 ${T('ओनर पैनल','Owner panel')}</h2><div class="seg t3">${tb.map(([k,l])=>`<button class="${k===t?'on':''}" onclick="ownSave();ownTab('${k}')">${l}</button>`).join('')}</div>${b}<button class="btn p" onclick="ownSave(1)">${T('सेव करें','Save')}</button><button class="btn" onclick="cs()">${T('बंद करें','Close')}</button>`)}
+sheet(`<h2>🔐 ${T('ओनर पैनल','Owner panel')}</h2><div class="seg t3 t4" style="grid-template-columns:repeat(4,1fr)">${tb.map(([k,l])=>`<button class="${k===t?'on':''}" onclick="ownSave();ownTab('${k}')">${l}</button>`).join('')}</div>${b}<button class="btn p" onclick="ownSave(1)">${T('सेव करें','Save')}</button><button class="btn" onclick="cs()">${T('बंद करें','Close')}</button>`)}
 async function ownSave(show){const g=i=>document.getElementById(i);let ch=0;
 if(ot==='pl'&&g('tdy')){C.plans.forEach((p,i)=>{p.n=g('n'+i).value||p.n;p.pr=+g('p'+i).value||0;p.mc=+g('c'+i).value||0;p.mp=+g('m'+i).value||0;p.f=g('f'+i).value});C.trial=+g('tdy').value||0;C.offer=g('of').value;ch=1}
 if(ot==='ap'&&g('an2')){C.app=g('an2').value||'DukaanOS';C.sup=g('su').value.trim();C.upi=g('up').value.trim();C.ann=g('ann').value;C.mt=+g('mt2').value;ch=1}
-if(!ch)return;try{await FB.setDoc(FB.doc(FB.db,'config','app'),{app:C.app,sup:C.sup,upi:C.upi,qr:C.qr||'',ann:C.ann,mt:C.mt,trial:C.trial,offer:C.offer,plans:C.plans});render();if(show)toast(T('सबके लिए सेव हो गया','Saved for everyone'))}catch(e){toast(T('सेव नहीं हुआ: ','Not saved: ')+(e.code||e.message))}}
+if(!ch)return;try{await cfgPush();render();if(show)toast(T('सबके लिए सेव हो गया','Saved for everyone'))}catch(e){toast(T('सेव नहीं हुआ: ','Not saved: ')+(e.code||e.message))}}
 async function ownUsers(){ot='us';sheet(`<h2>👥</h2><p class="mut">${T('लोड हो रहा है…','Loading…')}</p>`);try{const g=await FB.getDocs(FB.collection(FB.db,'users'));UL=[];g.forEach(d=>UL.push({id:d.id,...d.data()}))}catch(e){return toast(T('यूज़र्स नहीं मिले','Could not load users'))}
 const n=UL.filter(u=>u.plan!=='free'&&u.planUntil>Date.now()).length;
 sheet(`<h2>👥 ${T('यूज़र्स','Users')}</h2><p class="mut">${T('कुल','Total')}: ${UL.length}, ${T('पेड','Paid')}: ${n}</p>${UL.map((u,i)=>`<div class="pc"><p><b>${esc(u.email||'')}</b><br><small>${esc(u.plan)}${u.planUntil>Date.now()?' → '+new Date(u.planUntil).toLocaleDateString('en-IN'):''}${u.pay&&u.pay.length?', '+T('भुगतान','Payments')+': '+u.pay.length+', '+R(u.pay.reduce((a,x)=>a+x.amt,0)):''}${u.created?', '+T('जुड़ा','Joined')+' '+new Date(u.created).toLocaleDateString('en-IN'):''}</small></p><select id="us${i}" onchange="$('ud${i}').value=(C.plans.find(x=>x.id===this.value)||{}).yr?365:30">${C.plans.map(p=>`<option value="${p.id}" ${p.id===u.plan?'selected':''}>${esc(p.n)}</option>`).join('')}</select><label>${T('कितने दिन','Days')}<input id="ud${i}" type="number" value="30"></label><label>${T('मिली रकम ₹ (खाली = कीमत के हिसाब से)','Amount received ₹ (blank = by price)')}<input id="ua${i}" type="number"></label><button class="btn p" onclick="setUser(${i})">${T('प्लान सेट करें','Set plan')}</button></div>`).join('')}<button class="btn" onclick="ownTab('pl')">${T('वापस','Back')}</button>`)}
